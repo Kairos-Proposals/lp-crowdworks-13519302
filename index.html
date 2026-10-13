@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos ご提案 | コンサートチケットセールス＆情報サイト制作</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --midnight:#1A1033;
+    --royal:#2E1D52;
+    --gold:#FFC94B;
+    --pink:#FF6F91;
+    --ivory:#FBF7F2;
+    --mist:#B6A7D1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans JP',sans-serif;
+    color:#2A2140;
+    background:var(--ivory);
+    line-height:1.8;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{
+    font-family:'Cormorant Garamond',serif;
+  }
+  a{text-decoration:none;}
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255,201,75,0.18), transparent 45%),
+      radial-gradient(circle at 80% 10%, rgba(255,111,145,0.16), transparent 40%),
+      radial-gradient(ellipse at 50% 110%, rgba(255,201,75,0.12), transparent 50%),
+      linear-gradient(180deg, #120A24 0%, var(--midnight) 45%, var(--royal) 100%);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:120px 24px 80px;
+    overflow:hidden;
+  }
+  .curtain{
+    position:absolute;
+    top:0; bottom:0;
+    width:18%;
+    background:repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 6px,
+      rgba(0,0,0,0.12) 6px,
+      rgba(0,0,0,0.12) 14px
+    );
+    filter:blur(0.3px);
+  }
+  .curtain.left{ left:0; border-radius:0 40% 40% 0 / 0 50% 50% 0;
+    box-shadow: 10px 0 60px rgba(0,0,0,0.5) inset;}
+  .curtain.right{ right:0; border-radius:40% 0 0 40% / 50% 0 0 50%;
+    box-shadow: -10px 0 60px rgba(0,0,0,0.5) inset;}
+
+  .spotlight-dot{
+    position:absolute;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,201,75,0.9), rgba(255,201,75,0) 70%);
+    opacity:0.5;
+  }
+  .sd1{width:14px;height:14px;top:18%;left:30%;}
+  .sd2{width:8px;height:8px;top:30%;left:70%;}
+  .sd3{width:10px;height:10px;top:65%;left:12%;}
+  .sd4{width:6px;height:6px;top:70%;left:85%;}
+
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    max-width:780px;
+  }
+  .badge{
+    display:inline-block;
+    font-size:13px;
+    letter-spacing:0.15em;
+    padding:7px 20px;
+    border:1px solid rgba(255,201,75,0.5);
+    border-radius:999px;
+    color:var(--gold);
+    margin-bottom:28px;
+    background:rgba(255,201,75,0.06);
+  }
+  .hero h1{
+    font-size:clamp(34px, 5.6vw, 64px);
+    font-weight:600;
+    letter-spacing:0.02em;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .hero h1 span{
+    color:var(--gold);
+    font-style:italic;
+  }
+  .hero p.lead{
+    font-size:16px;
+    color:var(--mist);
+    max-width:560px;
+    margin:0 auto 36px;
+    letter-spacing:0.03em;
+  }
+  .hero-sub{
+    display:flex;
+    gap:14px;
+    justify-content:center;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:#DCD2EE;
+  }
+  .hero-sub span{
+    padding:6px 14px;
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:999px;
+  }
+
+  /* scroll cue */
+  .scrollcue{
+    position:absolute;
+    bottom:30px; left:50%;
+    transform:translateX(-50%);
+    width:1px; height:50px;
+    background:linear-gradient(180deg, rgba(255,201,75,0.9), transparent);
+    z-index:2;
+  }
+
+  /* ===== SECTION COMMON ===== */
+  section{
+    padding:100px 0;
+    position:relative;
+  }
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:0.2em;
+    color:var(--pink);
+    font-weight:500;
+    margin-bottom:14px;
+    display:block;
+  }
+  .sec-title{
+    font-size:clamp(26px,4vw,40px);
+    font-weight:600;
+    color:var(--midnight);
+    margin-bottom:28px;
+  }
+
+  /* ===== UNDERSTANDING ===== */
+  .understand{
+    background:
+      repeating-linear-gradient(90deg, rgba(46,29,82,0.025) 0px, rgba(46,29,82,0.025) 2px, transparent 2px, transparent 40px),
+      var(--ivory);
+  }
+  .understand-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:60px;
+    align-items:flex-start;
+  }
+  .understand p{
+    font-size:15.5px;
+    color:#4A3E63;
+    margin-bottom:18px;
+  }
+  .ticket-note{
+    background:#fff;
+    border-radius:18px;
+    padding:36px 32px;
+    box-shadow:0 20px 50px -20px rgba(46,29,82,0.25);
+    position:relative;
+    border:1px solid rgba(46,29,82,0.08);
+  }
+  .ticket-note::before,
+  .ticket-note::after{
+    content:"";
+    position:absolute;
+    width:24px;height:24px;
+    background:var(--ivory);
+    border-radius:50%;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .ticket-note::before{ left:-12px; }
+  .ticket-note::after{ right:-12px; }
+  .ticket-note h3{
+    font-size:20px;
+    color:var(--royal);
+    margin-bottom:14px;
+    font-weight:600;
+  }
+  .ticket-note ul{
+    list-style:none;
+  }
+  .ticket-note li{
+    font-size:14px;
+    color:#564A78;
+    padding:9px 0 9px 24px;
+    position:relative;
+    border-top:1px dashed rgba(46,29,82,0.14);
+  }
+  .ticket-note li:first-child{border-top:none;}
+  .ticket-note li::before{
+    content:"♪";
+    position:absolute;
+    left:0;
+    color:var(--pink);
+  }
+
+  /* ===== VALUES ===== */
+  .values{
+    background:linear-gradient(180deg, var(--midnight), #1E1340 60%, var(--royal));
+    color:#fff;
+  }
+  .values .eyebrow{ color:var(--gold); }
+  .values .sec-title{ color:#fff; }
+  .values-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:26px;
+    margin-top:20px;
+  }
+  .vcard{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:4px 4px 0 0;
+    padding:34px 28px 30px;
+    position:relative;
+    overflow:hidden;
+  }
+  .vcard::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:14px;
+    background:
+      radial-gradient(circle at 10px 0, transparent 7px, rgba(27,16,53,1) 7.5px) repeat-x;
+    background-size:20px 14px;
+  }
+  .vnum{
+    font-family:'Cormorant Garamond',serif;
+    font-size:42px;
+    color:var(--gold);
+    font-style:italic;
+    line-height:1;
+    margin-bottom:12px;
+    opacity:0.85;
+  }
+  .vcard h3{
+    font-size:19px;
+    font-weight:600;
+    margin-bottom:10px;
+    color:#fff;
+  }
+  .vcard p{
+    font-size:14px;
+    color:var(--mist);
+  }
+
+  /* ===== SCHEDULE ===== */
+  .schedule{ background:var(--ivory); }
+  .timeline{
+    margin-top:50px;
+    position:relative;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:20px;
+    top:6px; bottom:6px;
+    width:2px;
+    background:linear-gradient(180deg, var(--pink), var(--gold));
+  }
+  .tl-item{
+    position:relative;
+    padding:0 0 42px 60px;
+  }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    left:11px; top:2px;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:var(--ivory);
+    border:3px solid var(--pink);
+  }
+  .tl-item .tl-time{
+    font-size:12.5px;
+    letter-spacing:0.1em;
+    color:var(--pink);
+    font-weight:700;
+    margin-bottom:6px;
+    display:block;
+  }
+  .tl-item h4{
+    font-size:18px;
+    color:var(--midnight);
+    margin-bottom:6px;
+    font-weight:600;
+  }
+  .tl-item p{
+    font-size:14px;
+    color:#564A78;
+  }
+
+  /* ===== CLOSING ===== */
+  .closing{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,201,75,0.15), transparent 55%),
+      linear-gradient(180deg, var(--royal), #140A28);
+    color:#fff;
+    text-align:center;
+    padding:120px 24px;
+  }
+  .closing .serif{
+    font-size:clamp(28px,4.4vw,46px);
+    margin-bottom:22px;
+    font-weight:600;
+  }
+  .closing p{
+    color:var(--mist);
+    max-width:560px;
+    margin:0 auto 40px;
+    font-size:15px;
+  }
+  .cta-btn{
+    display:inline-block;
+    background:linear-gradient(135deg, var(--gold), #FFB347);
+    color:var(--midnight);
+    font-weight:700;
+    padding:17px 46px;
+    border-radius:999px;
+    font-size:15px;
+    letter-spacing:0.04em;
+    box-shadow:0 20px 40px -15px rgba(255,201,75,0.6);
+    transition:transform .25s ease;
+  }
+  .cta-btn:hover{ transform:translateY(-3px); }
+  .closing-foot{
+    margin-top:50px;
+    font-size:12.5px;
+    color:#8A7CA8;
+    letter-spacing:0.08em;
+  }
+
+  footer{
+    background:#140A28;
+    color:#6F6190;
+    text-align:center;
+    font-size:12px;
+    padding:26px;
+    letter-spacing:0.05em;
+  }
+
+  @media (max-width:860px){
+    .understand-grid{ grid-template-columns:1fr; gap:40px; }
+    .values-grid{ grid-template-columns:1fr; }
+    .curtain{ width:10%; }
+  }
+  @media (max-width:520px){
+    section{ padding:70px 0; }
+    .hero{ padding:140px 20px 70px; }
+    .ticket-note{ padding:28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="curtain left"></div>
+    <div class="curtain right"></div>
+    <div class="spotlight-dot sd1"></div>
+    <div class="spotlight-dot sd2"></div>
+    <div class="spotlight-dot sd3"></div>
+    <div class="spotlight-dot sd4"></div>
+
+    <div class="hero-inner">
+      <span class="badge">KAIROS PROPOSAL</span>
+      <h1>幕が上がる瞬間を、<br>世界で一番美しく<span>届ける。</span></h1>
+      <p class="lead">
+        世界的コンテンツのコンサート情報サイト制作にあたり、
+        Kairosより制作体制とデザインの方向性をご提案いたします。
+        スポットライトが当たるその一瞬のために、
+        サイトの隅々まで設計します。
+      </p>
+      <div class="hero-sub">
+        <span>WordPress構築</span>
+        <span>レスポンシブ対応</span>
+        <span>SEO設計</span>
+        <span>納期：11月末</span>
+      </div>
+    </div>
+    <div class="scrollcue"></div>
+  </section>
+
+  <!-- ===== UNDERSTANDING ===== -->
+  <section class="understand">
+    <div class="wrap understand-grid">
+      <div>
+        <span class="eyebrow">ご依頼の理解</span>
+        <h2 class="sec-title">華やかさと運用性、<br>両立の難しさを知っています。</h2>
+        <p>
+          今回のご依頼は、誰もが知る世界的コンテンツのコンサート情報サイト。
+          参考サイトに拝見できるような、舞台演出さながらの質感あるビジュアルと、
+          チケット購入までの導線がスムーズに繋がる構成が求められていると理解しています。
+        </p>
+        <p>
+          ターゲットは女性を中心としつつファミリー層まで含む幅広い層。
+          だからこそ、過度に装飾的になりすぎず、誰が見ても安心して情報を読み取れる
+          「上品な高揚感」のデザインバランスが鍵になると考えています。
+        </p>
+        <p>
+          また貴社がご自身で情報更新を行えるWordPress設計、スマホでの滑らかな挙動、
+          そしてスタイルガイドに忠実でありながら表現力を損なわないコーディングが
+          必須条件であることも把握しております。
+        </p>
+      </div>
+
+      <div class="ticket-note">
+        <h3>こう読み解きました</h3>
+        <ul>
+          <li>世界的コンテンツ＝細部の品質基準が高い。崩れないデザインの再現力が必須。</li>
+          <li>WordPressでの運用前提。情報アップ作業がしやすい管理画面設計が必要。</li>
+          <li>女性＋ファミリー層＝華やかさと分かりやすさの両立が求められる。</li>
+          <li>スマホでの滑らかな動作＝パフォーマンスチューニングまで含めた実装力が必要。</li>
+          <li>守秘義務・信頼関係が前提＝契約・コミュニケーション体制も重視される案件。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VALUES ===== -->
+  <section class="values">
+    <div class="wrap">
+      <span class="eyebrow">KAIROSが提供できる価値</span>
+      <h2 class="sec-title">デザインとコーディング、<br>その両輪を一人称で。</h2>
+
+      <div class="values-grid">
+        <div class="vcard">
+          <div class="vnum">01</div>
+          <h3>スタイルガイド忠実実装</h3>
+          <p>提供いただくスタイルガイドに正確に準拠しながら、素材の魅力を最大限引き出すレイアウトとタイポグラフィを設計します。</p>
+        </div>
+        <div class="vcard">
+          <div class="vnum">02</div>
+          <h3>更新しやすいWordPress設計</h3>
+          <p>公演情報・チケット情報の追加更新を貴社側で簡単に行えるよう、カスタムフィールドやブロック構成を最適化して構築します。</p>
+        </div>
+        <div class="vcard">
+          <div class="vnum">03</div>
+          <h3>サクサク動くモバイル体験</h3>
+          <p>多くのファンが訪れることを想定し、画像最適化・遅延読み込み・軽量コーディングでスマホでも滑らかな体験を実現します。</p>
+        </div>
+        <div class="vcard">
+          <div class="vnum">04</div>
+          <h3>SEO・流入設計まで対応</h3>
+          <p>構造化マークアップやメタ設計を含め、公演や関連キーワードでの検索流入を見据えたサイト構成をご用意します。</p>
+        </div>
+        <div class="vcard">
+          <div class="vnum">05</div>
+          <h3>誠実なコミュニケーション</h3>
+          <p>守秘義務の厳守、契約の締結、こまめな進捗共有を前提に、オンライン面談含め顔の見える信頼関係を大切にします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHEDULE ===== -->
+  <section class="schedule">
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--pink);">進め方・スケジュール</span>
+      <h2 class="sec-title">11月末の開幕に向けて、<br>逆算で丁寧に。</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <span class="tl-time">STEP 01</span>
+          <h4>オンライン面談・ヒアリング</h4>
+          <p>スタイルガイド・提供素材・サイト構成を確認し、WordPress設計の方向性をすり合わせます。</p>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">STEP 02</span>
+          <h4>デザインカンプ制作</h4>
+          <p>参考サイトとスタイルガイドを踏まえ、トップ・公演詳細・チケット導線のデザインを作成しご確認いただきます。</p>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">STEP 03</span>
+          <h4>WordPress実装・コーディング</h4>
+          <p>管理のしやすさを重視したテーマ構築と、レスポンシブ・パフォーマンス最適化を並行して進めます。</p>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">STEP 04</span>
+          <h4>SEO対策・最終調整</h4>
+          <p>メタ情報や構造化データを整え、表示速度・表示崩れのチェックを全デバイスで実施します。</p>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">STEP 05</span>
+          <h4>契約サーバーへ納品</h4>
+          <p>11月末の完成に向け、貴社契約サーバーへの納品・動作確認までサポートいたします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section class="closing">
+    <div class="wrap">
+      <h2 class="serif">このステージ、<br>一緒に作らせてください。</h2>
+      <p>
+        ポートフォリオと実績、そしてお見積もりをご用意のうえ、
+        ぜひ一度オンラインでお話させてください。
+        顔の見えるお付き合いを大切に、誠実に対応いたします。
+      </p>
+      <a href="#" class="cta-btn">Kairosに相談・見積もりを依頼する</a>
+      <div class="closing-foot">KAIROS — Web制作・システム開発チーム</div>
+    </div>
+  </section>
+
+  <footer>
+    © Kairos. This is a proposal landing page for turtlemusic's project.
+  </footer>
+
+</body>
+</html>
